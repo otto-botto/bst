@@ -4,7 +4,6 @@ extern "C"{
 #include "bin_tree.h"
 }
 
-
 TEST(BinTree, InsertNodeTest) {
 
     clock_t start_time = clock(); // Record start time
@@ -275,4 +274,44 @@ TEST(BinTree, TotalStorageZeroTest) {
     EXPECT_EQ(0, storage);
 
     destroyTree(treep);
+}
+
+TEST(BinTreeValues, InsertNRTest) {
+    Node* treep = nullptr;
+    treep = insertNodeVal(treep, 100);
+    EXPECT_EQ(treep->value, 100);
+
+    treep = insertNodeVal(treep, 50);
+    treep = insertNodeVal(treep, 25);
+    treep = insertNodeVal(treep, 75);
+    treep = insertNodeVal(treep, 150);
+    treep = insertNodeVal(treep, 125);
+    treep = insertNodeVal(treep, 175);
+    treep = insertNodeVal(treep, 110);
+
+    EXPECT_EQ(treep->left->left->value, 25);
+    EXPECT_EQ(treep->right->left->left->value, 110);
+    EXPECT_EQ(treep->right->right->value, 175);
+
+    destroyTreeVal(treep);
+}
+
+TEST(BinTreeValues, ApplyPreOrderTest) {
+    Node* treep = nullptr;
+    treep = insertNodeVal(treep, 100);
+    treep = insertNodeVal(treep, 50);
+    treep = insertNodeVal(treep, 25);
+    treep = insertNodeVal(treep, 75);
+    treep = insertNodeVal(treep, 150);
+    treep = insertNodeVal(treep, 125);
+    treep = insertNodeVal(treep, 175);
+    treep = insertNodeVal(treep, 110);
+
+    applyPreorderVal(treep);
+
+    destroyTreeVal(treep);
+}
+
+TEST(Recursion, RangeTest) {
+    printRangeRecursiveSplit(1, 10);
 }

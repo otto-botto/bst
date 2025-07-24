@@ -13,6 +13,16 @@ typedef struct Nameval{
   struct Nameval* right;
 }Nameval;
 
+typedef struct Node {
+  struct Node* left;
+  struct Node* right;
+  int value;
+}Node;
+
+Node* makeNodeVal(int value);
+Node* insertNodeVal(Node* treep, int value);
+void applyPreorderVal(Node* treep);
+
 Nameval* makeNode(char* name, int value);
 Nameval* insertNode(Nameval* treep, Nameval* newp);
 Nameval* nrinsertNode(Nameval* treep, Nameval* newp);
@@ -24,5 +34,8 @@ void applyPostorder(Nameval* treep);
 int treeHeight(Nameval* treep);
 int totalStorage(Nameval* treep);
 void destroyTree(Nameval* tree);
+void destroyTreeVal(Node* treep);
+
+void printRangeRecursiveSplit(int start, int stop);
 
 #endif

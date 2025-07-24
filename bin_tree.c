@@ -1,6 +1,5 @@
 #include "bin_tree.h"
 
-
 Nameval* makeNode(char* name, int value) {
   Nameval* node = (Nameval*)malloc(sizeof(Nameval));
 
@@ -19,6 +18,15 @@ void destroyTree(Nameval* tree) {
   destroyTree(tree->left);
   destroyTree(tree->right);
   free(tree);
+}
+void destroyTreeVal(Node* treep) {
+  if (treep == NULL) {
+    return;
+  }
+  destroyTreeVal(treep->left);
+  destroyTreeVal(treep->right);
+
+  free(treep);
 }
 
 Nameval* insertNode(Nameval* treep, Nameval* newp){
@@ -139,5 +147,63 @@ int totalStorage(Nameval* treep) {
     lh = lh + totalStorage(treep->left);
     rh = rh + totalStorage(treep->right);
     return start + lh + rh;
+  }
+}
+
+Node* makeNodeVal(int value) {
+  Node* node = (Node*)malloc(sizeof(Node));
+  node->value = value;
+  node->left = NULL;
+  node->right = NULL;
+  return node;
+}
+
+Node* insertNodeVal(Node* treep, int value) {
+  Node* node = makeNodeVal(value);
+  if (treep == NULL) {
+    treep = node;
+  }else {
+    Node* tmp = treep;
+    while (tmp) {
+      if (node->value == tmp->value) {
+        fprintf(stderr, "Ignored duplicate node value %d\t", node->value);
+      }else if (node->value < tmp->value){
+        if (tmp->left != NULL) {
+          tmp = tmp->left;
+        }else {
+          tmp->left = node;
+          return treep;
+        }
+      }else {
+        if (tmp->right != NULL) {
+          tmp = tmp->right;
+        }else {
+          tmp->right = node;
+          return treep;
+        }
+      }
+    }
+  }
+  return treep;
+}
+
+void applyPreorderVal(Node* treep) {
+  if (treep == NULL) {
+    return;
+  }
+  fprintf(stderr, "%d\t", treep->value);
+  applyPreorderVal(treep->left);
+  applyPreorderVal(treep->right);
+}
+
+void printRangeRecursiveSplit(int start, int stop){
+  int mid;
+
+  if(start < stop) {
+    mid = (start + stop) / 2;
+
+    printRangeRecursiveSplit(start, mid);
+    printf("%d\n", mid);
+    printRangeRecursiveSplit(mid+1, stop);
   }
 }
